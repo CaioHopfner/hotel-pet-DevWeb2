@@ -9,10 +9,18 @@ const tutores = ref([]);
     const respostaPets = await fetch(`${API_URL}/pets`);
     pets.value = await respostaPets.json();
 
-    const respostaTutores = await fetch(`${API_URL}/pets`);
-    pets.value = await respostaTutores.json();
+   const respostaTutores = await fetch(`${API_URL}/tutores`);
+    tutores.value = await respostaTutores.json();
  }
 
+ function nomeDoTutor(tutorId){
+  for(const tutor of tutores.value){
+    if(tutor.id  === tutorId){
+      return tutor.nome;
+    }
+  }
+  return "Tutor não encontrado";
+ }
 onMounted(carregarDados); 
 </script>
 
@@ -26,7 +34,7 @@ onMounted(carregarDados);
     </header>
   </div>
 
-  <table>
+  <table class="table table-striped table-hover">
     <th>ID</th>
     <th>Nome</th>
     <th>Espécie</th>
@@ -36,11 +44,7 @@ onMounted(carregarDados);
             <td>{{ pet.id }}</td>
             <td>{{ pet.nome }}</td>
             <td>{{ pet.especie }}</td>
-            <td>
-                {{
-                tutores.find((t) => t.id === pet.tutorId)?.nome || 'Não especificado' 
-                }}
-            </td>
+            <td>{{ nomeDoTutor(pet.tutorId) }}</td>
         </tr>
     </tbody>
   </table>
