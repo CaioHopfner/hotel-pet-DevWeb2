@@ -36,5 +36,5 @@
 <template>
     <h1>Nome: {{ pet.nome }}</h1>
     <p>Espécie: {{ pet.especie }}</p>
-    <!-- <p>Tutor: {{ nomeDoTutor(pet.tutorID) }}</p> -->
+    <p>Tutor: {{ tutor.nome || 'Tutor não encontrado' }}</p>
 </template>
