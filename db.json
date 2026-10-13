@@ -23,12 +23,6 @@
       "nome": "Nino",
       "especie": "Gato",
       "tutorId": "1"
-    },
-    {
-      "nome": "Chuvisco",
-      "especie": "Cachorro",
-      "tutorId": "2",
-      "id": "I8ZRUWjkwXE"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
