@@ -35,16 +35,21 @@ onMounted(carregarDados);
   </div>
 
   <table class="table table-striped table-hover">
-    <th>ID</th>
-    <th>Nome</th>
-    <th>Espécie</th>
-    <th>Tutor</th>
+    <tr>
+      <th>ID</th>
+      <th>Nome</th>
+      <th>Espécie</th>
+      <th>Tutor</th>
+      <th>Ações</th>
+    </tr>
+    
     <tbody>
         <tr v-for="pet in pets" :key="pet.id">
             <td>{{ pet.id }}</td>
             <td>{{ pet.nome }}</td>
             <td>{{ pet.especie }}</td>
             <td>{{ nomeDoTutor(pet.tutorId) }}</td>
+            <td> <RouterLink :to="`/pets/${pet.id}`">Visualizar</RouterLink>  Excluir</td>
         </tr>
     </tbody>
   </table>
