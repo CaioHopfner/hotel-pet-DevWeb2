@@ -1,34 +1,20 @@
 {
   "tutores": [
     {
-      "id": "1",
-      "nome": "Ana",
-      "telefone": "47999990000"
-    },
-    {
-      "id": "2",
-      "nome": "Carlos",
-      "telefone": "47988880000"
-    },
-    {
-      "nome": "Geraldo",
-      "telefone": "67 67676767",
-      "id": "IKzIsjKbyeg"
+      "id": "p6D86DGirP4",
+      "nome": "Laurenço Karalhos",
+      "cpf": "15016017080",
+      "telefone": "47996023210",
+      "email": "laurenco@gmail.com",
+      "dataNascimento": "2002-08-29",
+      "rua": "Rua Ana Cara de Banana",
+      "numero": "",
+      "bairro": "Bairro Madeiro",
+      "cidade": "Chuville",
+      "estado": "SC",
+      "cep": "999999"
     }
   ],
-  "pets": [
-    {
-      "id": "1",
-      "nome": "Safira",
-      "especie": "Cachorro",
-      "tutorId": "1"
-    },
-    {
-      "id": "2",
-      "nome": "Nino",
-      "especie": "Gato",
-      "tutorId": "1"
-    }
-  ],
+  "pets": [],
   "$schema": "./node_modules/json-server/schema.json"
 }
