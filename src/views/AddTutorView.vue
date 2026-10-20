@@ -21,6 +21,46 @@ const novoTutor = ref({
 });
 const erro = ref('');
 
+function formatarCep() {
+  const valor = novoTutor.value.cep.replace(/\D/g, '').slice(0, 8);
+  novoTutor.value.cep =
+    valor.length > 5 ? `${valor.slice(0, 5)}-${valor.slice(5)}` : valor;
+}
+
+async function buscarEnderecoPorCep() {
+  const cepNumerico = novoTutor.value.cep.replace(/\D/g, '');
+
+  if (cepNumerico.length !== 8) {
+    erro.value = 'Digite um CEP válido com 8 números.';
+    return;
+  }
+
+  try {
+    erro.value = '';
+
+    const resposta = await fetch(
+      `https://viacep.com.br/ws/${cepNumerico}/json/`,
+    );
+    const dados = await resposta.json();
+
+    if (dados.erro) {
+      throw new Error('CEP não encontrado.');
+    }
+
+    novoTutor.value.rua = dados.logradouro || '';
+    novoTutor.value.bairro = dados.bairro || '';
+    novoTutor.value.cidade = dados.localidade || '';
+    novoTutor.value.estado = dados.uf || '';
+  } catch (error) {
+    console.error('Erro ao buscar CEP:', error);
+    novoTutor.value.rua = '';
+    novoTutor.value.bairro = '';
+    novoTutor.value.cidade = '';
+    novoTutor.value.estado = '';
+    erro.value = 'Não foi possível localizar o endereço para este CEP.';
+  }
+}
+
 async function salvarTutor() {
   try {
     const resposta = await fetch(`${API_URL}/tutores`, {
@@ -173,6 +213,33 @@ function cancelarCadastro() {
         <div class="row g-4">
           <div class="col-md-6">
             <label
+              for="cep"
+              class="field-label"
+              >CEP</label
+            >
+            <div class="input-group">
+              <input
+                id="cep"
+                v-model="novoTutor.cep"
+                type="text"
+                class="form-control custom-input"
+                placeholder="00000-000"
+                maxlength="9"
+                required
+                @input="formatarCep"
+                @blur="buscarEnderecoPorCep"
+              />
+              <button
+                type="button"
+                class="btn btn-outline-primary buscar-cep-btn"
+                @click="buscarEnderecoPorCep"
+              >
+                Buscar
+              </button>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label
               for="rua"
               class="field-label"
               >Rua</label
@@ -248,29 +315,34 @@ function cancelarCadastro() {
               required
             >
               <option value="">Selecione</option>
-              <option value="SP">SP</option>
-              <option value="RJ">RJ</option>
+              <option value="AC">AC</option>
+              <option value="AL">AL</option>
+              <option value="AP">AP</option>
+              <option value="AM">AM</option>
+              <option value="BA">BA</option>
+              <option value="CE">CE</option>
+              <option value="DF">DF</option>
+              <option value="ES">ES</option>
+              <option value="GO">GO</option>
+              <option value="MA">MA</option>
+              <option value="MT">MT</option>
+              <option value="MS">MS</option>
               <option value="MG">MG</option>
+              <option value="PA">PA</option>
+              <option value="PB">PB</option>
               <option value="PR">PR</option>
-              <option value="SC">SC</option>
+              <option value="PE">PE</option>
+              <option value="PI">PI</option>
+              <option value="RJ">RJ</option>
+              <option value="RN">RN</option>
               <option value="RS">RS</option>
+              <option value="RO">RO</option>
+              <option value="RR">RR</option>
+              <option value="SC">SC</option>
+              <option value="SP">SP</option>
+              <option value="SE">SE</option>
+              <option value="TO">TO</option>
             </select>
-          </div>
-
-          <div class="col-md-6">
-            <label
-              for="cep"
-              class="field-label"
-              >CEP</label
-            >
-            <input
-              id="cep"
-              v-model="novoTutor.cep"
-              type="text"
-              class="form-control custom-input"
-              placeholder="00000-000"
-              required
-            />
           </div>
         </div>
 
@@ -351,6 +423,31 @@ function cancelarCadastro() {
 
 .custom-input::placeholder {
   color: #8a919d;
+}
+
+.input-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.input-group .custom-input {
+  flex: 1;
+}
+
+.buscar-cep-btn {
+  white-space: nowrap;
+  border-radius: 0.5rem;
+  border: 1px solid #0d6efd;
+  color: #0d6efd;
+  background: #ffffff;
+  font-weight: 600;
+  padding: 0.75rem 1rem;
+}
+
+.buscar-cep-btn:hover,
+.buscar-cep-btn:focus {
+  background: #e7f1ff;
+  color: #0d6efd;
 }
 
 .custom-input:focus,

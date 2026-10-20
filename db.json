@@ -1,20 +1,61 @@
 {
   "tutores": [
     {
-      "id": "p6D86DGirP4",
-      "nome": "Laurenço Karalhos",
-      "cpf": "15016017080",
+      "id": "xOzptpD6wmA",
+      "nome": "Ana Lontra",
+      "cpf": "11111111111",
+      "telefone": "479988704780",
+      "email": "aninha@gmail.com",
+      "dataNascimento": "2000-12-29",
+      "rua": "Praça da Sé",
+      "numero": "200",
+      "bairro": "Sé",
+      "cidade": "São Paulo",
+      "estado": "SP",
+      "cep": "01001-000"
+    },
+    {
+      "id": "byZf1DBT9Kw",
+      "nome": "Sao Joao",
+      "cpf": "5675u76565",
+      "telefone": "565656",
+      "email": "kuhujg@fes",
+      "dataNascimento": "1980-04-30",
+      "rua": "SBN Quadra 1 Bloco A",
+      "numero": "6789",
+      "bairro": "Asa Norte",
+      "cidade": "Brasília",
+      "estado": "DF",
+      "cep": "70002-900"
+    },
+    {
+      "id": "e8mMD_Pi3Jc",
+      "nome": "Jubarte ",
+      "cpf": "80020030039",
       "telefone": "47996023210",
-      "email": "laurenco@gmail.com",
-      "dataNascimento": "2002-08-29",
-      "rua": "Rua Ana Cara de Banana",
-      "numero": "",
-      "bairro": "Bairro Madeiro",
-      "cidade": "Chuville",
-      "estado": "SC",
-      "cep": "999999"
+      "email": "jubartin@gmail.com",
+      "dataNascimento": "1995-09-20",
+      "rua": "Rua Senador Pompeu",
+      "numero": "01",
+      "bairro": "Centro",
+      "cidade": "Fortaleza",
+      "estado": "CE",
+      "cep": "60025-000"
     }
   ],
-  "pets": [],
+  "pets": [
+    {
+      "nome": "Gato",
+      "especie": "Cachorro",
+      "tutorId": "byZf1DBT9Kw",
+      "id": "izrAyvD1CNk"
+    },
+    {
+      "nome": "Cachorro",
+      "especie": "Gato",
+      "tutorId": "byZf1DBT9Kw",
+      "id": "KRFsIGuXQC8"
+    }
+  ],
   "$schema": "./node_modules/json-server/schema.json"
 }

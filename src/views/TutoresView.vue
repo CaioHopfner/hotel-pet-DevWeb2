@@ -1,12 +1,37 @@
 <script setup>
 import { onMounted, ref } from 'vue';
-import { RouterLink } from 'vue-router';
+import { RouterLink, useRouter } from 'vue-router';
 
 const API_URL = 'http://localhost:3000';
+const router = useRouter();
 
 const tutores = ref([]);
 const pets = ref([]);
 const erro = ref('');
+
+function mascararCpf(cpf) {
+  if (!cpf) return '';
+  return '***.***.***-**';
+}
+
+function getPetsDoTutor(tutorId) {
+  return pets.value.filter((pet) => String(pet.tutorId) === String(tutorId));
+}
+
+function getQuantidadePets(tutorId) {
+  return getPetsDoTutor(tutorId).length;
+}
+
+function getNomesPets(tutorId) {
+  return getPetsDoTutor(tutorId)
+    .map((pet) => pet.nome)
+    .filter(Boolean)
+    .join(', ');
+}
+
+function visualizarTutor(tutor) {
+  router.push(`/tutores/${tutor.id}`);
+}
 
 async function carregarDados() {
   try {
@@ -30,7 +55,9 @@ async function carregarDados() {
 
 async function excluirTutor(tutor) {
   if (pets.value.some((pet) => String(pet.tutorId) === String(tutor.id))) {
-    window.alert('Não é possível excluir este tutor enquanto houver pets vinculados.');
+    window.alert(
+      'Não é possível excluir este tutor enquanto houver pets vinculados.',
+    );
     return;
   }
 
@@ -59,17 +86,26 @@ onMounted(carregarDados);
 
 <template>
   <div>
-    <header class="mb-4 d-flex flex-wrap justify-content-between align-items-center gap-3">
+    <header
+      class="mb-4 d-flex flex-wrap justify-content-between align-items-center gap-3"
+    >
       <div>
         <h1 class="text-2xl font-bold">Listagem de Tutores</h1>
         <p class="text-body-secondary mb-0">Tutores cadastrados no sistema.</p>
       </div>
-      <RouterLink class="btn btn-success" to="/tutores/novo">
+      <RouterLink
+        class="btn btn-success"
+        to="/tutores/novo"
+      >
         Cadastrar tutor
       </RouterLink>
     </header>
 
-    <div v-if="erro" class="alert alert-danger" role="alert">
+    <div
+      v-if="erro"
+      class="alert alert-danger"
+      role="alert"
+    >
       {{ erro }}
     </div>
 
@@ -87,22 +123,39 @@ onMounted(carregarDados);
         </tr>
       </thead>
       <tbody>
-        <tr v-for="tutor in tutores" :key="tutor.id">
+        <tr
+          v-for="tutor in tutores"
+          :key="tutor.id"
+        >
           <td>{{ tutor.id }}</td>
           <td>{{ tutor.nome }}</td>
-          <td>{{ tutor.cpf }}</td>
+          <td>{{ mascararCpf(tutor.cpf) }}</td>
           <td>{{ tutor.telefone }}</td>
           <td>{{ tutor.email }}</td>
-          <td></td>
-          <td></td>
+          <td>{{ getQuantidadePets(tutor.id) }}</td>
+          <td>{{ getNomesPets(tutor.id) || 'Nenhum pet' }}</td>
           <td>
-            <button class="btn btn-danger" @click="excluirTutor(tutor)">
-              Excluir
-            </button>
+            <div class="d-flex gap-2 flex-wrap">
+              <button
+                class="btn btn-outline-primary btn-sm"
+                @click="visualizarTutor(tutor)"
+              >
+                Visualizar
+              </button>
+              <button
+                class="btn btn-danger btn-sm"
+                @click="excluirTutor(tutor)"
+              >
+                Excluir
+              </button>
+            </div>
           </td>
         </tr>
         <tr v-if="tutores.length === 0 && !erro">
-          <td colspan="4" class="text-center text-body-secondary">
+          <td
+            colspan="8"
+            class="text-center text-body-secondary"
+          >
             Nenhum tutor cadastrado.
           </td>
         </tr>
